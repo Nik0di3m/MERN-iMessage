@@ -25,7 +25,7 @@
 }
 
 .sidebarChat:hover{
-    background: rgb(62,147,253);
     border-radius: 15px;
-    background: linear-gradient(28deg, rgba(62,147,253,1) 0%, rgba(0,212,255,1) 100%); 
+    background: rgb(91,246,117);
+    background: linear-gradient(28deg, rgba(12,189,42,1) 0%, rgba(91,246,117,1) 100%); 
 }

@@ -1,12 +1,12 @@
 .sidebar{
 
     display: inline-flex;
-    flex: 0.35;
+    flex: 0.25;
     flex-direction: column;
     padding: 8px 8px;
-    height: 100vh;
+    max-height: 100vh;
     background-color: #181818;
-    border-right: 1px solid lightgray;
+    border-right: 1px solid #363636;
 
 }
 
@@ -48,7 +48,7 @@
 }
 
 .MuiTouchRipple-root{
-    color: white;
+    color: #0cbd2a;
 }
 
 .sidebar__chats{
