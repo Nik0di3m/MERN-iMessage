@@ -1,0 +1,22 @@
+/imessage-frontend/node-modules/
+
+
+/imessage-frontend/.pnp
+/imessage-frontend/.pnp.js
+/imessage-frontend/
+/imessage-frontend/# testing
+/imessage-frontend/coverage
+/imessage-frontend/
+/imessage-frontend/# production
+/imessage-frontend/build
+/imessage-frontend/
+/imessage-frontend/# misc
+/imessage-frontend/.DS_Store
+/imessage-frontend/.env.local
+/imessage-frontend/.env.development.local
+/imessage-frontend/.env.test.local
+/imessage-frontend/.env.production.local
+/imessage-frontend/
+/imessage-frontend/npm-debug.log*
+/imessage-frontend/yarn-debug.log*
+/imessage-frontend/yarn-error.log*
