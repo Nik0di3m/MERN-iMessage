@@ -4,21 +4,37 @@ import { useDispatch } from 'react-redux';
 import './SidebarChat.css'
 import { setChat } from '../../../../features/chatSlice.js'
 import axios from '../../../../axios.js'
+import Pusher from 'pusher-js';
+
+const pusher = new Pusher('9db22ad0a7bad1f27649', {
+    cluster: 'eu'
+});
+
 const SiebarChat = ({ id, name }) => {
 
     const dispatch = useDispatch();
 
     const [chats, setChats] = useState([])
 
+    const getSidebarElements = () => {
 
-    useEffect(() => {
         axios.get(`/get/chat/messageLast?id=${id}`).then((response) => {
-
             const sorted = response.data.sort((a, b) => b - a)
-
             setChats(sorted[0])
             console.log(sorted[0])
         })
+    }
+
+    useEffect(() => {
+
+        getSidebarElements()
+
+        const channel = pusher.subscribe('messages');
+        channel.bind('newMessage', function (data) {
+            console.log('work')
+            getSidebarElements()
+        })
+
 
 
     }, [id])

@@ -29,7 +29,15 @@
     flex: 1;
     color: white;
     overflow-y: scroll;
+    overscroll-behavior-y: contain;
+    scroll-snap-type: y;
+    
 }
+
+.chat__message > div:last-child{
+    scroll-snap-align: end;
+}
+
 
 .chat__input{
     display: flex;

@@ -9,18 +9,34 @@ import { selectUser } from '../../../features/counterSlice';
 import { useSelector } from 'react-redux';
 import { auth } from '../../../firebase'
 import axios from '../../../axios'
+import Pusher from 'pusher-js';
+
+const pusher = new Pusher('9db22ad0a7bad1f27649', {
+    cluster: 'eu'
+});
+
 const Sidebar = () => {
 
     const user = useSelector(selectUser);
 
     const [chat, setChat] = useState([]);
 
-    useEffect(() => {
+
+    const getChats = () => {
         axios.get('/get/chats').then((response) => {
             const res = response.data
-            console.log(res)
             setChat(res)
         })
+    }
+
+    useEffect(() => {
+        getChats()
+
+        const channel = pusher.subscribe('chats');
+        channel.bind('newChat', function (data) {
+            getChats()
+        })
+
     }, [])
 
     const logout = () => {
@@ -29,9 +45,22 @@ const Sidebar = () => {
 
     const addChat = () => {
         const promptName = prompt('Chat name')
-        if (promptName) {
+        const firstmessage = "Welcome!🔥🚀"
+        if (promptName && firstmessage) {
+
+            let chatId = ''
+
             axios.post('/new/chat', {
                 chatname: promptName,
+            }).then((response) => {
+                chatId = response.data._id
+            }).then(() => {
+                axios.post(`/new/message?id=${chatId}`, {
+                    message: firstmessage,
+                    timestamp: new Date().toLocaleString(),
+                    user: "iBot",
+                    userImage: "https://botsfordiscord.com/img/error/1.png"
+                })
             })
         }
     }

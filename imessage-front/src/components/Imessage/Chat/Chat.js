@@ -9,6 +9,11 @@ import { selectChatName, selectChatId } from '../../../features/chatSlice';
 import { useSelector } from 'react-redux';
 import axios from '../../../axios.js'
 import { selectUser } from '../../../features/counterSlice';
+import Pusher from 'pusher-js';
+
+const pusher = new Pusher('9db22ad0a7bad1f27649', {
+    cluster: 'eu'
+});
 const Chat = () => {
 
     const [input, setInput] = useState('')
@@ -29,10 +34,14 @@ const Chat = () => {
 
 
     useEffect(() => {
-        if (chatId) {
-            console.log(message)
+        pusher.unsubscribe('messages')
+        getMessage()
+
+        const channel = pusher.subscribe('messages');
+        channel.bind('newMessage', function (data) {
             getMessage()
-        }
+        })
+
     }, [chatId])
 
     const sendMessage = (e) => {
@@ -46,6 +55,10 @@ const Chat = () => {
 
         })
         setInput('')
+        const scroll = document.getElementsByClassName('chat__message');
+
+        window.scrollTo(0, 0)
+
 
         //MERN magic
     };
