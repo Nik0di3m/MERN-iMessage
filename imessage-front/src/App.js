@@ -28,7 +28,7 @@ const App = () => {
         dispatch(logout())
       }
     })
-  }, [])
+  }, [dispatch]);
 
   return (
     // BEM naming conventions

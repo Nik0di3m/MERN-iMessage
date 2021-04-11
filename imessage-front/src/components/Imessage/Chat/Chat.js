@@ -28,7 +28,7 @@ const Chat = () => {
                 <h3>test message</h3>
             </div>
             <div className="chat__input">
-                <form>
+                <form onSubmit={sendMessage}>
                     <input type="text" placeholder="iMessage" onChange={(e) => setInput(e.target.value)} value={input} />
                 </form>
                 <IconButton onClick={sendMessage}>
