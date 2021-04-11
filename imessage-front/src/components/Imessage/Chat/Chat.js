@@ -1,16 +1,50 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Chat.css'
 import { IconButton } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import MicIcon from '@material-ui/icons/Mic';
 import NearMeIcon from '@material-ui/icons/NearMe';
+import ChatMessage from './ChatMessage/ChatMessage';
+import { selectChatName, selectChatId } from '../../../features/chatSlice';
+import { useSelector } from 'react-redux';
+import axios from '../../../axios.js'
+import { selectUser } from '../../../features/counterSlice';
 const Chat = () => {
 
     const [input, setInput] = useState('')
 
+    const user = useSelector(selectUser)
+
+    const chatName = useSelector(selectChatName)
+    const chatId = useSelector(selectChatId)
+    const [message, setMessage] = useState([])
+
+    const getMessage = () => {
+
+        axios.get(`/get/chat/message?id=${chatId}`).then((response) => {
+            setMessage(response.data[0].conversation)
+        }).catch((err) => console.log(err))
+
+    }
+
+
+    useEffect(() => {
+        if (chatId) {
+            console.log(message)
+            getMessage()
+        }
+    }, [chatId])
+
     const sendMessage = (e) => {
         e.preventDefault()
-        console.log(input)
+        axios.post(`/new/message?id=${chatId}`, {
+            message: input,
+            timestamp: new Date().toLocaleString(),
+            uid: user.uid,
+            user: user.displayName,
+            userImage: user.photo,
+
+        })
         setInput('')
 
         //MERN magic
@@ -19,13 +53,24 @@ const Chat = () => {
     return (
         <div className="chat">
             <div className="chat__header">
-                <h4>To: <span className="chat__name">Channel name</span></h4>
+                <h4>To: <span className="chat__name">{chatName}</span></h4>
                 <IconButton variant="filled" className="sidebar__inputButton">
                     <HelpOutlineIcon />
                 </IconButton>
             </div>
             <div className="chat__message">
-                <h3>test message</h3>
+                {message ? (<>{message.map((item) => (
+                    <ChatMessage
+                        key={item.id}
+                        userName={item.user}
+                        userImage={item.userImage}
+                        message={item.message}
+                        timestamp={item.timestamp}
+                    />
+                ))}</>)
+                    :
+                    (<>Send first message</>)}
+
             </div>
             <div className="chat__input">
                 <form onSubmit={sendMessage}>

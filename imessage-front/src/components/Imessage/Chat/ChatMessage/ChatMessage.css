@@ -1,0 +1,41 @@
+.chat__messageContent{
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: fit-content;
+    justify-content: space-between;
+    margin: 15px;
+}
+
+.chat__messageContent > p {
+    background: #181818;
+    font-size: medium;
+    padding: 15px;
+    border-radius: 20px;
+    margin: 10px;
+    margin-right: auto;
+}
+
+.chat__messageContent > small {
+    color: grey;
+    position: absolute;
+    font-size: 12px;
+    bottom: -5px;
+    right: 0;
+}
+
+.message__sender {
+    margin-left: auto;
+}
+
+.message__sender > .message__photo {
+    order: 1;
+    margin: 15px;
+}
+.message__sender > small {
+    left: 15px;
+}
+.message__sender > p {
+    background: linear-gradient(28deg, rgba(12,189,42,1) 0%, rgba(91,246,117,1) 100%); 
+
+}

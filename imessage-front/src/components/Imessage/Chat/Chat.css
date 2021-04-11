@@ -28,6 +28,7 @@
 .chat__message{
     flex: 1;
     color: white;
+    overflow-y: scroll;
 }
 
 .chat__input{

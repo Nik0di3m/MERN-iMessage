@@ -17,8 +17,9 @@ const Sidebar = () => {
 
     useEffect(() => {
         axios.get('/get/chats').then((response) => {
-            console.log(response.data)
-            setChat(response.data)
+            const res = response.data
+            console.log(res)
+            setChat(res)
         })
     }, [])
 
@@ -53,6 +54,7 @@ const Sidebar = () => {
                 {chat.map((item, index) => (
                     <SidebarChat
                         key={item.id}
+                        id={item.id}
                         name={item.name}
                     />
                 ))}
